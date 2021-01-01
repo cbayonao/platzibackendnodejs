@@ -19,7 +19,7 @@ function moviesApi(app) {
         }
     });
 
-    router.get('/:movieID', async function(req, res, next) {
+    router.get('/:movieId', async function(req, res, next) {
         // Params cuanado estan estabecido en la URL
         // Query es cuando viene con signo de pregunta en la URL
         const { movieId } = req.params;
@@ -27,7 +27,7 @@ function moviesApi(app) {
             const movie = await moviesService.getMovie({ movieId });
             res.status(200).json({
                 data: movie,
-                message: `Movie ${movie} retrieved`,
+                message: `Movie ${movieId} retrieved`,
             });
         } catch (error) {
             next(error);
@@ -47,11 +47,11 @@ function moviesApi(app) {
         }
     });
 
-    router.put('/:movieID', async function(req, res, next) {
-        const { body: movie } = req;
+    router.put('/:movieId', async function(req, res, next) {
         const { movieId } = req.params;
+        const { body: movie } = req;
         try {
-            const updatedMovieId = await moviesService.updatedMovie({
+            const updatedMovieId = await moviesService.updateMovie({
                 movieId,
                 movie,
             });
@@ -81,10 +81,10 @@ function moviesApi(app) {
         }
     });
 
-    router.delete('/:movieID', async function(req, res, next) {
+    router.delete('/:movieId', async function(req, res, next) {
         const { movieId } = req.params;
         try {
-            const deletedMovieId = await moviesService.deletedMovie({ movieId });
+            const deletedMovieId = await moviesService.deleteMovie({ movieId });
             res.status(200).json({
                 data: deletedMovieId,
                 message: `Movie ${deletedMovieId} deleted`,
